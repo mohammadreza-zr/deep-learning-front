@@ -438,7 +438,7 @@ const Home: FC = () => {
             <input
               type="text"
               placeholder="Search for Datasets"
-              className="Input pr-8 w-full"
+              className="Input pr-8 w-full z-0"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
