@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: var(--white);
+  --mainBlue: #5d61ef;
+  font-family: Lexend;
+}
+
+@font-face {
+  font-family: Lexend;
+  src: url('../fonts/Lexend-VariableFont_wght.ttf');
+}
+
+@mixin shadow($x: -2px, $y: 2px, $scale: 0px, $opacity: 1px) {
+  -webkit-box-shadow: $x $y $opacity $scale #000000;
+  box-shadow: $x $y $opacity $scale #000000;
+  transition: box-shadow 0.3s;
+}
+
+@layer components {
+  .Input {
+    @apply py-1 px-4 border border-black rounded-xl outline-none;
+    &:hover {
+      @include shadow(-2px, 2px, 1px);
+    }
+    &:focus {
+      @include shadow(-2px, 2px, 1px);
+    }
+  }
+  .Tag {
+    @apply py-[0.15rem] px-3 bg-mainBlue text-white rounded-lg;
+  }
+}
+.myShadow:hover {
+  @include shadow(-3px, 3px, 3px, 3px);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  user-select: none;
+
+  & li {
+    margin: 0 1%;
+    min-width: 2rem;
+    min-height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 50%;
+
+    &:first-child {
+      border: none;
+    }
+    &:last-child {
+      border: none;
+    }
+
+    & a {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .selected {
+    background-color: var(--mainBlue);
+    color: white;
+    border: none;
+  }
+  .disabled {
+    color: gray;
+    & a {
+      cursor: default !important;
+    }
+  }
+  .break {
+    border: none;
+  }
+}
