@@ -2,435 +2,35 @@ import { FC, useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { photos } from '../../base/assets';
 import { DatasetCard } from '../../base/components/DatasetCard/DatasetCard';
-
-const cards = [
-  {
-    title: '1 this is Title',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '2',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '3',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '4',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '5',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '6',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '7',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '8',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '1',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '2',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '3',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '4',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '5',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '6',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '7',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-  {
-    title: '8',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tempora quod possimus error reiciendis sunt et fuga quas quisquam, in cum similique quae cupiditate labore iure, hic accusamus.',
-    views: 100,
-    image: '1.png',
-    hashtag: [
-      {
-        isOk: true,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: false,
-        text: '#this',
-      },
-      {
-        isOk: true,
-        text: '#this',
-      },
-    ],
-  },
-];
+import { useWindowSize } from '../../base/hooks/';
+import { datasets } from '../../base/data/datasets';
 
 const itemsPerPage = 4;
 const Home: FC = () => {
   const [currentItems, setCurrentItems] = useState<any>();
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading cards from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(cards.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(cards.length / itemsPerPage));
+    setCurrentItems(datasets.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(datasets.length / itemsPerPage));
   }, [itemOffset]);
 
   const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * itemsPerPage) % cards.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`,
-    );
+    const newOffset = (event.selected * itemsPerPage) % datasets.length;
     setItemOffset(newOffset);
   };
 
   return (
     <div>
       <section>
-        <img src={photos.Banner} alt="" />
+        <img
+          className="rounded-lg mb-4 sm:mb-0"
+          src={windowSize[0] > 640 ? photos.Banner : photos.MobileBanner}
+          alt=""
+        />
       </section>
       <section>
         <div className="flex flex-col-reverse lg:flex-row justify-between">
@@ -460,13 +60,14 @@ const Home: FC = () => {
         <h2 className="mt-4">100 dataset result for 'remote sensing'</h2>
       </section>
       <section>
-        {currentItems?.map(({ title, description, image, hashtag, views }: any) => {
+        {currentItems?.map(({ title, description, image, hashtag }: any) => {
           return (
             <DatasetCard
               key={title}
               title={title}
               description={description}
               hashtag={hashtag}
+              image={image}
             />
           );
         })}

@@ -31,7 +31,7 @@ body {
     }
   }
   .Tag {
-    @apply py-[0.15rem] px-3 bg-mainBlue text-white rounded-lg;
+    @apply px-3 bg-mainBlue text-white rounded-lg;
   }
 }
 .myShadow:hover {
@@ -89,4 +89,12 @@ body {
   .break {
     border: none;
   }
+}
+.listStyleImage ::before {
+  content: '';
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  background-image: url('../icons/star.svg');
+  margin-right: 0.5rem;
 }
