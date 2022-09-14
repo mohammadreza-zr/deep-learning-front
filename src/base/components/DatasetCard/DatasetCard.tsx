@@ -20,7 +20,15 @@ export const DatasetCard: FC<CardProps> = ({ title, description, image, hashtag 
         />
       </div>
       <div className="flex flex-col items-start justify-center w-full sm:w-10/12 sm:ml-4">
-        <Link to={`/dataset-info/${title}`} className="font-bold pt-[0.2rem]">
+        <Link
+          onClick={() => {
+            window.scroll({
+              top: 0,
+            });
+          }}
+          to={`/dataset-info/${title}`}
+          className="font-bold pt-[0.2rem]"
+        >
           {title}
         </Link>
         <div className="my-2 line-clamp-2 h-12">{description}</div>
