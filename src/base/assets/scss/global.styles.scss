@@ -6,12 +6,24 @@ html,
 body {
   background-color: var(--white);
   --mainBlue: #5d61ef;
-  font-family: Lexend;
+  font-family: Barlow, calibril;
+
+  @media screen and (max-width: 640px) {
+    font-family: Lexend;
+  }
 }
 
 @font-face {
   font-family: Lexend;
   src: url('../fonts/Lexend-VariableFont_wght.ttf');
+}
+@font-face {
+  font-family: Barlow;
+  src: url('../fonts/Barlow-Regular.ttf');
+}
+@font-face {
+  font-family: calibril;
+  src: url('../fonts/calibril.woff');
 }
 
 @mixin shadow($x: -2px, $y: 2px, $scale: 0px, $opacity: 1px) {
@@ -135,7 +147,6 @@ body {
 .font-size-11 {
   font-size: 11px;
 }
-
 .responsive-font-size {
   font-size: 11px;
 

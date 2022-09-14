@@ -5,7 +5,7 @@ import { DatasetCard } from '../../base/components/DatasetCard/DatasetCard';
 import { useWindowSize } from '../../base/hooks/';
 import { datasets } from '../../base/data/datasets';
 
-const itemsPerPage = 4;
+const itemsPerPage = 20;
 const Home: FC = () => {
   const [currentItems, setCurrentItems] = useState<any>();
   const [pageCount, setPageCount] = useState(0);
@@ -14,16 +14,36 @@ const Home: FC = () => {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
+    console.log('endOffset', endOffset);
+    console.log('current item:', datasets.slice(itemOffset, endOffset));
+
     setCurrentItems(datasets.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(datasets.length / itemsPerPage));
   }, [itemOffset]);
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % datasets.length;
+    console.log('newOffset:', newOffset);
+
     window.scroll({
       top: 330,
     });
     setItemOffset(newOffset);
+  };
+  console.log(datasets?.length);
+
+  const Cards = () => {
+    return currentItems?.map(({ title, description, image, hashtag }: any) => {
+      return (
+        <DatasetCard
+          key={title}
+          title={title}
+          description={description}
+          hashtag={hashtag}
+          image={image}
+        />
+      );
+    });
   };
 
   return (
@@ -58,34 +78,30 @@ const Home: FC = () => {
               />
             </svg>
           </div>
-          <div className="text-gray-500 font-bold">Share your dataset with us!</div>
+          <div className="text-gray-500 font-bold">
+            {windowSize[0] > 640
+              ? 'Share your dataset with us!'
+              : 'Remote Sensing Datasets'}
+          </div>
         </div>
         <h2 className="mt-4">100 dataset result for 'remote sensing'</h2>
       </section>
       <section>
-        {currentItems?.map(({ title, description, image, hashtag }: any) => {
-          return (
-            <DatasetCard
-              key={title}
-              title={title}
-              description={description}
-              hashtag={hashtag}
-              image={image}
-            />
-          );
-        })}
+        <Cards />
       </section>
-      <section>
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel=">"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="<"
-          className="pagination"
-        />
-      </section>
+      {datasets?.length > 20 && (
+        <section>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="<"
+            className="pagination"
+          />
+        </section>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
@@ -6,17 +6,10 @@ import { photos } from '../assets';
 
 export default function Example() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
-  const closeButton = useRef<any>();
-
-  const handleClose = () => {
-    if (closeButton.current) {
-      closeButton.current.click = true;
-    }
-  };
 
   return (
     <Popover className="relative bg-white">
-      <div className="flex items-center justify-between border-b-2 border-gray-100 mb-4 lg:justify-start lg:space-x-10">
+      <div className="flex items-center justify-between mb-4 lg:justify-start lg:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link to="#">
             <span className="sr-only">Deep Learning</span>

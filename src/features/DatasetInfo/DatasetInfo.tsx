@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { datasets } from '../../base/data/datasets';
 
-import { A11y } from 'swiper';
+import { A11y, Pagination } from 'swiper';
 import 'swiper/css';
 import { RefObject, useRef } from 'react';
 
@@ -63,7 +63,7 @@ const DatasetInfo = () => {
             </p>
           </div>
           <div className="flex flex-col items-center lg:w-2/12 md:w-3/12 md:mt-0 mt-4 md:ml-4">
-            <ul className="w-full sm:w-2/3 text-center md:w-full flex flex-col md:items-center shadow-xl border border-gray-200 text-mainBlue rounded-2xl p-3">
+            <ul className="w-full hidden sm:w-2/3 text-center md:w-full sm:flex flex-col md:items-center shadow-xl border border-gray-200 text-mainBlue rounded-2xl p-3">
               {datasets.map((dataset: any, index: number) => {
                 return (
                   <li
@@ -98,16 +98,24 @@ const DatasetInfo = () => {
       <section className="select-none">
         <h2 className="my-4 font-bold">Additional datasets to explore:</h2>
         <Swiper
-          modules={[A11y]}
+          modules={[A11y, Pagination]}
           spaceBetween={50}
-          slidesPerView={2}
+          slidesPerView={1}
           className="swiper_center"
           navigation
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
           breakpoints={{
-            640: {
+            380: {
               slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            480: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            640: {
+              slidesPerView: 3,
               spaceBetween: 20,
             },
             768: {
@@ -115,7 +123,7 @@ const DatasetInfo = () => {
               spaceBetween: 40,
             },
             1024: {
-              slidesPerView: 5,
+              slidesPerView: 4,
               spaceBetween: 50,
             },
           }}
@@ -130,7 +138,7 @@ const DatasetInfo = () => {
                       top: 0,
                     });
                   }}
-                  className="h-48 w-36 flex flex-col justify-between rounded-md p-2 hover:scale-110 cursor-pointer transition-transform border border-gray-300"
+                  className="h-48 w-44 flex flex-col justify-between rounded-md p-2 hover:scale-110 cursor-pointer transition-transform border border-gray-300"
                 >
                   <div className="h-28">
                     <img
@@ -139,7 +147,9 @@ const DatasetInfo = () => {
                       className="rounded-md"
                     />
                   </div>
-                  <span className="font-size-16 h-8 min-h-fit">{dataset.title}</span>
+                  <span className="font-size-16 h-7 min-h-fit line-clamp-1">
+                    {dataset.title}
+                  </span>
                 </Link>
               </SwiperSlide>
             );

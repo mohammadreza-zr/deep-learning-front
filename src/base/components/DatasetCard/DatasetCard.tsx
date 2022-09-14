@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { photos } from '../../assets';
 
 interface CardProps {
   title: string;
@@ -12,7 +11,7 @@ interface CardProps {
 export const DatasetCard: FC<CardProps> = ({ title, description, image, hashtag }) => {
   return (
     <div className="flex flex-col items-center justify-center sm:flex-row overflow-hidden rounded-2xl shadow-lg myShadow border border-black p-2 my-4">
-      <div className="min-w-[11%] w-[7.1rem] h-28 border border-gray-300 rounded-md p-2 flex items-center justify-center">
+      <div className="hidden min-w-[11%] w-[7.1rem] h-28 border border-gray-300 rounded-md p-2 sm:flex items-center justify-center">
         <img
           src={require(`../../assets/images/${image}`)}
           alt=""
