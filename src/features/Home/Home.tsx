@@ -20,6 +20,9 @@ const Home: FC = () => {
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % datasets.length;
+    window.scroll({
+      top: 330,
+    });
     setItemOffset(newOffset);
   };
 
@@ -33,7 +36,7 @@ const Home: FC = () => {
         />
       </section>
       <section>
-        <div className="flex flex-col-reverse lg:flex-row justify-between">
+        <div className="flex flex-col-reverse lg:flex-row justify-between items-center">
           <div className="relative md:w-2/3 lg:w-1/3 mt-4 lg:mt-0">
             <input
               type="text"
@@ -55,7 +58,7 @@ const Home: FC = () => {
               />
             </svg>
           </div>
-          <div className="text-gray-500">Home/Deep Learning Datasets</div>
+          <div className="text-gray-500 font-bold">Share your dataset with us!</div>
         </div>
         <h2 className="mt-4">100 dataset result for 'remote sensing'</h2>
       </section>

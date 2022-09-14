@@ -10,9 +10,9 @@ const Layout: FC<props> = ({ children }) => {
   return (
     <Fragment>
       <div className="">
-        <div className="container p-4 sm:p-2 xl:max-w-5xl">
+        <div className="container p-4 pb-0 sm:p-2 xl:max-w-5xl">
           <Header />
-          <main style={{ minHeight: 'calc(100vh - 9rem)' }}>{children}</main>
+          <main style={{ minHeight: 'calc(100vh - 8rem)' }}>{children}</main>
           <Footer />
         </div>
       </div>

@@ -1,10 +1,19 @@
-import { Fragment } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { photos } from '../assets';
 
 export default function Example() {
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
+  const closeButton = useRef<any>();
+
+  const handleClose = () => {
+    if (closeButton.current) {
+      closeButton.current.click = true;
+    }
+  };
+
   return (
     <Popover className="relative bg-white">
       <div className="flex items-center justify-between border-b-2 border-gray-100 mb-4 lg:justify-start lg:space-x-10">
@@ -15,7 +24,10 @@ export default function Example() {
           </Link>
         </div>
         <div className="-my-2 -mr-2 lg:hidden">
-          <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+          <Popover.Button
+            onClick={() => setIsNavOpen((pre) => !pre)}
+            className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          >
             <span className="sr-only">Open menu</span>
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </Popover.Button>
@@ -96,6 +108,7 @@ export default function Example() {
       </div>
 
       <Transition
+        show={isNavOpen}
         as={Fragment}
         enter="duration-200 ease-out"
         enterFrom="opacity-0 scale-95"
@@ -115,7 +128,10 @@ export default function Example() {
                   <img className="h-8 w-auto" src={photos.Logo} alt="Your Company" />
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <Popover.Button
+                    onClick={() => setIsNavOpen((pre) => !pre)}
+                    className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  >
                     <span className="sr-only">Close menu</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
@@ -126,30 +142,35 @@ export default function Example() {
               <div className="flex flex-col gap-y-4 gap-x-8">
                 <Link
                   to={'/'}
+                  onClick={() => setIsNavOpen((pre) => !pre)}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Deep Learning Datasets
                 </Link>
                 <Link
                   to="/"
+                  onClick={() => setIsNavOpen((pre) => !pre)}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Training Materials
                 </Link>
                 <Link
                   to="/"
+                  onClick={() => setIsNavOpen((pre) => !pre)}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Post/Find a Job
                 </Link>
                 <Link
                   to="/"
+                  onClick={() => setIsNavOpen((pre) => !pre)}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Companies
                 </Link>
                 <div className="flex items-center justify-start">
                   <a
+                    onClick={() => setIsNavOpen((pre) => !pre)}
                     href="https://www.linkedin.com/company/spatialcommand/"
                     className="whitespace-nowrap mr-4 font-bold text-black hover:text-gray-800"
                   >
@@ -157,6 +178,7 @@ export default function Example() {
                   </a>
                   <a
                     href="mailto:hello@spatialcommand.com"
+                    onClick={() => setIsNavOpen((pre) => !pre)}
                     className="whitespace-nowrap mx-2 text-base font-medium text-black hover:text-gray-800"
                   >
                     <svg
