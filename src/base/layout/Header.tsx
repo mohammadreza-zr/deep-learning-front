@@ -13,7 +13,7 @@ export default function Example() {
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link to="#">
             <span className="sr-only">Deep Learning</span>
-            <img className="h-10 w-auto sm:h-12" src={photos.Logo} alt="" />
+            <img className="h-10 w-auto sm:h-12 rounded-md" src={photos.Logo} alt="" />
           </Link>
         </div>
         <div className="-my-2 -mr-2 lg:hidden">
@@ -30,56 +30,30 @@ export default function Example() {
             to={'/'}
             className="text-base font-medium text-gray-500 hover:text-gray-900"
           >
-            Deep Learning Datasets
+            Datasets
           </Link>
           <Link
             to="/"
             className="text-base font-medium text-gray-500 hover:text-gray-900"
           >
-            Training Materials
+            Models
           </Link>
           <Link
             to="/"
             className="text-base font-medium text-gray-500 hover:text-gray-900"
           >
-            Post/Find a Job
+            EO Satellites
           </Link>
           <Link
             to="/"
             className="text-base font-medium text-gray-500 hover:text-gray-900"
           >
-            Companies
+            Geo indeed
           </Link>
         </Popover.Group>
         <div className="hidden items-center justify-end lg:flex lg:flex-1">
-          <a
-            href="https://www.linkedin.com/company/spatialcommand/"
-            className="whitespace-nowrap font-bold text-black hover:text-gray-800"
-          >
-            in
-          </a>
-          <a
-            href="mailto:hello@spatialcommand.com"
-            className="whitespace-nowrap mx-2 text-base font-medium text-black hover:text-gray-800"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-              />
-            </svg>
-          </a>
-          |
           <Link
-            to="#"
+            to="/login"
             className="inline-flex items-center ml-2 justify-center whitespace-nowrap rounded-full border border-gray-700 p-1 text-base font-medium text-gray-700 shadow-sm"
           >
             <svg
@@ -138,57 +112,37 @@ export default function Example() {
                   onClick={() => setIsNavOpen((pre) => !pre)}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
-                  Deep Learning Datasets
+                  Datasets
                 </Link>
                 <Link
                   to="/"
                   onClick={() => setIsNavOpen((pre) => !pre)}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
-                  Training Materials
+                  Models
                 </Link>
                 <Link
                   to="/"
                   onClick={() => setIsNavOpen((pre) => !pre)}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
-                  Post/Find a Job
+                  EO Satellites
                 </Link>
                 <Link
                   to="/"
                   onClick={() => setIsNavOpen((pre) => !pre)}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
-                  Companies
+                  Geo indeed
                 </Link>
                 <div className="flex items-center justify-start">
-                  <a
-                    onClick={() => setIsNavOpen((pre) => !pre)}
-                    href="https://www.linkedin.com/company/spatialcommand/"
-                    className="whitespace-nowrap mr-4 font-bold text-black hover:text-gray-800"
-                  >
-                    in
-                  </a>
-                  <a
-                    href="mailto:hello@spatialcommand.com"
-                    onClick={() => setIsNavOpen((pre) => !pre)}
-                    className="whitespace-nowrap mx-2 text-base font-medium text-black hover:text-gray-800"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-                      />
-                    </svg>
-                  </a>
+                  <Link to={'/login'} className="mr-2">
+                    Login
+                  </Link>{' '}
+                  /{' '}
+                  <Link to={'/register'} className="ml-2">
+                    Register
+                  </Link>
                 </div>
               </div>
             </div>

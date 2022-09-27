@@ -1,16 +1,79 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import { datasets } from '../../base/data/datasets';
 
 import { A11y, Pagination } from 'swiper';
 import 'swiper/css';
-import { RefObject, useRef } from 'react';
+import { RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useAppDispatch } from '../../base/hooks';
+import { setLoading } from '../../base/redux';
+import { apiService } from '../../base/services';
+import { baseUrl } from '../../base/config';
+
+const ImageSection = ({ fullScreenImage, imageUrl }: any) => {
+  return (
+    <div ref={fullScreenImage} className="transition-all">
+      <img
+        src={baseUrl + imageUrl}
+        alt=""
+        className="rounded-md"
+        crossOrigin="anonymous"
+      />
+    </div>
+  );
+};
+
+const HashtagSection = ({ hashtag }: any) => {
+  return hashtag?.map((hashtag: any, index: number) => {
+    return (
+      <li key={index} className="flex listStyleImage items-center justify-center mb-2">
+        <Link
+          to={`/datasets/?hashtag=${hashtag}`}
+          className="flex items-center justify-center"
+        >
+          {hashtag}
+        </Link>
+      </li>
+    );
+  });
+};
+
+const BodySection = ({ body }: any) => {
+  return <p>{body}</p>;
+};
 
 const DatasetInfo = () => {
   const { title } = useParams();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const [data, setData] = useState<any>(null);
+
   const fullScreenImage: RefObject<any> = useRef(null);
-  const imageLink = datasets.filter((dataset: any) => dataset.title === title);
+  const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    dispatch(setLoading(true));
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+
+    return () => {};
+  }, [location.pathname]);
+
+  const fetchData = async () => {
+    try {
+      const result = await apiService.get(`datasets/single/${title}`);
+      if (result.status === 200) {
+        setData(result.data);
+        dispatch(setLoading(false));
+      }
+    } catch (error) {
+      navigate(-1);
+      dispatch(setLoading(false));
+    }
+  };
 
   const checkForHaveClassName = (className: string, classList: []) => {
     let status = false;
@@ -43,54 +106,17 @@ const DatasetInfo = () => {
         <h1 className="mb-4 font-bold">{title}</h1>
         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-10">
           <div className="md:w-9/12">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt nam
-              architecto quisquam harum excepturi culpa aliquam similique alias mollitia
-              illo. Sit rerum omnis mollitia iusto ad quos eum dignissimos in.
-              <br />
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda, error.
-              Incidunt non maiores laboriosam illo sequi facilis, sint sit voluptate
-              reprehenderit totam hic ad eveniet a ipsum architecto dicta accusamus?
-              <br />
-              <br />
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt nam
-              architecto quisquam harum excepturi culpa aliquam similique alias mollitia
-              illo. Sit rerum omnis mollitia iusto ad quos eum dignissimos in.
-              <br />
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda, error.
-              Incidunt non maiores laboriosam illo sequi facilis, sint sit voluptate
-              reprehenderit totam hic ad eveniet a ipsum architecto dicta accusamus?
-            </p>
+            <BodySection body={data?.body} />
           </div>
           <div className="flex flex-col items-center lg:w-2/12 md:w-3/12 md:mt-0 mt-4 md:ml-4">
             <ul className="w-full hidden sm:w-2/3 text-center md:w-full sm:flex flex-col md:items-center shadow-xl border border-gray-200 text-mainBlue rounded-2xl p-3">
-              {datasets.map((dataset: any, index: number) => {
-                return (
-                  <li
-                    key={index}
-                    className="flex listStyleImage items-center justify-center mb-2"
-                  >
-                    <Link
-                      to={`/dataset-info/${dataset.title}`}
-                      className="flex items-center justify-center"
-                    >
-                      {dataset.title}
-                    </Link>
-                  </li>
-                );
-              })}
+              <HashtagSection hashtag={data?.hashtag} />
             </ul>
             <div
               className="cursor-pointer w-full sm:w-2/3 md:w-full mt-4 min-h-[11.5rem] md:min-h-full"
               onClick={handleClickImage}
             >
-              <div ref={fullScreenImage} className="transition-all">
-                <img
-                  src={require(`../../base/assets/images/${imageLink[0]?.image}`)}
-                  alt=""
-                  className="rounded-md"
-                />
-              </div>
+              <ImageSection imageUrl={data?.imageUrl} fullScreenImage={fullScreenImage} />
             </div>
           </div>
         </div>
@@ -128,11 +154,11 @@ const DatasetInfo = () => {
             },
           }}
         >
-          {datasets?.map((dataset: any, index: number) => {
+          {data?.similarDatasets?.map((dataset: any, index: number) => {
             return (
               <SwiperSlide className="p-4" key={index}>
                 <Link
-                  to={`/dataset-info/${dataset.title}`}
+                  to={`/datasets/${dataset.title}`}
                   onClick={() => {
                     window.scroll({
                       top: 0,
@@ -142,9 +168,10 @@ const DatasetInfo = () => {
                 >
                   <div className="h-28">
                     <img
-                      src={require(`../../base/assets/images/${dataset.image}`)}
+                      src={baseUrl + dataset.imageUrl}
                       alt=""
                       className="rounded-md"
+                      crossOrigin="anonymous"
                     />
                   </div>
                   <span className="font-size-16 h-7 min-h-fit line-clamp-1">
