@@ -10,7 +10,7 @@ export default function Example() {
   const userRole = useAppSelector((state) => state.auth.role);
 
   return (
-    <Popover className="relative bg-white">
+    <Popover className="relative bg-white border-b border-gray-300">
       <div className="flex items-center justify-between mb-4 lg:justify-start lg:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link to="/">

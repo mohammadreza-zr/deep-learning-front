@@ -97,7 +97,6 @@ const DatasetInfo = () => {
         'full-screen',
         fullScreenImage.current.classList,
       );
-      console.log(status);
       if (status) {
         fullScreenImage.current.classList.remove('full-screen');
       } else {

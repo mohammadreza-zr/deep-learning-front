@@ -29,11 +29,6 @@ const DatasetList: FC = () => {
     }
   }, [itemOffset, datasets]);
 
-  // useEffect(() => {
-  //   fetchDatasetList();
-  //   return () => {};
-  // }, []);
-
   const fetchDatasetList = async () => {
     try {
       const tag = searchParams.get('hashtag');
@@ -70,8 +65,6 @@ const DatasetList: FC = () => {
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % datasets.length;
-    console.log('newOffset:', newOffset);
-
     window.scroll({
       top: 330,
     });
@@ -122,7 +115,7 @@ const DatasetList: FC = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row border-t border-gray-300 relative">
+    <div className="flex flex-col lg:flex-row relative">
       <aside
         className={`pt-8 border-gray-100 bg-white lg:static lg:px-0 lg:col-span-4 xl:col-span-3 lg:border-r lg:bg-gradient-to-l from-gray-50-to-white
 			${

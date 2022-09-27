@@ -5,7 +5,7 @@ import { photos } from '../assets';
 const Footer: React.FC = () => {
   return (
     <footer className="flex flex-col justify-center">
-      <hr className="border-mainGray" />
+      <hr className="border-gray-300" />
       <div className="flex flex-col md:flex-row items-start justify-between mt-4">
         <div className="w-full md:w-1/4 mb-8 flex flex-col items-center justify-start gap-2">
           <img src={photos.Logo} alt="" width={85} className="rounded-md" />
