@@ -1,7 +1,12 @@
 {
-  "name": "deep-learning",
+  "name": "SpatialCommand",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "MohammadReza Zare",
+    "url": "https://mr-zare.ir",
+    "email": "mohammadreza.zr@yahoo.com"
+  },
   "dependencies": {
     "@headlessui/react": "^1.7.0",
     "@heroicons/react": "^2.0.10",
