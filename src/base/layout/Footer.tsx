@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import { photos } from '../assets';
 
 const Footer: React.FC = () => {
+  const handleGetUp = () => {
+    window.scroll({
+      top: 0,
+    });
+  };
   return (
     <footer className="flex flex-col justify-center">
       <hr className="border-gray-300" />
@@ -11,29 +16,49 @@ const Footer: React.FC = () => {
           <img src={photos.Logo} alt="" width={85} className="rounded-md" />
           <p>
             Have an account?{' '}
-            <Link to={'/login'} className="text-mainBlue underline">
+            <Link onClick={handleGetUp} to={'/login'} className="text-mainBlue underline">
               Sign in
             </Link>
           </p>
         </div>
         <div className="w-full md:w-1/4 mb-8 flex flex-col items-center justify-start gap-2">
           <h2 className="text-white bg-black rounded-md px-1">Spatial Command</h2>
-          <Link to="">Model Hub</Link>
-          <Link to="">Dataset Hub</Link>
-          <Link to="">EO Satellite Hub</Link>
+          <Link onClick={handleGetUp} to="">
+            Model Hub
+          </Link>
+          <Link onClick={handleGetUp} to="">
+            Dataset Hub
+          </Link>
+          <Link onClick={handleGetUp} to="">
+            EO Satellite Hub
+          </Link>
         </div>
         <div className="w-full md:w-1/4 mb-8 flex flex-col items-center justify-start gap-2">
           <h2 className="text-white bg-black rounded-md px-1">Geo indeed</h2>
-          <Link to="">Post/Find a job</Link>
-          <Link to="">Training Materials</Link>
-          <Link to="">Competition</Link>
-          <Link to="">MSc Programs</Link>
+          <Link onClick={handleGetUp} to="">
+            Post/Find a job
+          </Link>
+          <Link onClick={handleGetUp} to="">
+            Training Materials
+          </Link>
+          <Link onClick={handleGetUp} to="">
+            Competition
+          </Link>
+          <Link onClick={handleGetUp} to="">
+            MSc Programs
+          </Link>
         </div>
         <div className="w-full md:w-1/4 mb-8 flex flex-col items-center justify-start gap-2">
           <h2 className="text-white bg-black rounded-md px-1">Information</h2>
-          <Link to="">Our Team</Link>
-          <Link to="">Blog</Link>
-          <Link to="">Contact</Link>
+          <Link onClick={handleGetUp} to="">
+            Our Team
+          </Link>
+          <Link onClick={handleGetUp} to="">
+            Blog
+          </Link>
+          <Link onClick={handleGetUp} to="">
+            Contact
+          </Link>
         </div>
       </div>
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8">
@@ -113,7 +138,7 @@ const Footer: React.FC = () => {
       </div>
       <div className="text-center my-2 md:mb-0 responsive-font-size">
         All Right Reserved.{' '}
-        <Link to={'/'} className="text-mainBlue">
+        <Link onClick={handleGetUp} to={'/'} className="text-mainBlue">
           SpatialCommand
         </Link>{' '}
         SpatialCommand 2022

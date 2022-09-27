@@ -29,6 +29,7 @@ const HashtagSection = ({ hashtag }: any) => {
         <Link
           to={`/datasets/?hashtag=${hashtag}`}
           className="flex items-center justify-center"
+          onClick={handleGetUp}
         >
           {hashtag}
         </Link>
@@ -46,7 +47,11 @@ const BodySection = ({ body }: any) => {
     ></div>
   );
 };
-
+const handleGetUp = () => {
+  window.scroll({
+    top: 0,
+  });
+};
 const DatasetInfo = () => {
   const { title } = useParams();
   const location = useLocation();
@@ -165,11 +170,7 @@ const DatasetInfo = () => {
                 <SwiperSlide className="p-4" key={index}>
                   <Link
                     to={`/datasets/${dataset.title}`}
-                    onClick={() => {
-                      window.scroll({
-                        top: 0,
-                      });
-                    }}
+                    onClick={handleGetUp}
                     className="h-48 w-44 flex flex-col justify-between rounded-md p-2 hover:scale-110 cursor-pointer transition-transform border border-gray-300"
                   >
                     <div className="h-[8.5rem] overflow-hidden">

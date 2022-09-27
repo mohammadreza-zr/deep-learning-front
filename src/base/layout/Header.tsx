@@ -23,7 +23,7 @@ export default function Example() {
   };
 
   return (
-    <Popover className="relative bg-white border-b border-gray-300">
+    <Popover className="relative bg-white border-b border-gray-300 z-20">
       <div className="flex items-center justify-between mb-4 lg:justify-start lg:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link to="/">

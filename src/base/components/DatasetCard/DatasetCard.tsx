@@ -10,11 +10,18 @@ interface CardProps {
 
 export const DatasetCard: FC<CardProps> = ({ title, hashtag }) => {
   const dispatch = useAppDispatch();
-
+  const handleGetUp = () => {
+    window.scroll({
+      top: 0,
+    });
+  };
   return (
     <article className="article group">
       <Link
-        onClick={() => dispatch(setLoading(true))}
+        onClick={() => {
+          dispatch(setLoading(true));
+          handleGetUp();
+        }}
         className="block p-2"
         to={`/datasets/${title}`}
       >
