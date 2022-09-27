@@ -71,7 +71,7 @@ const AdminPanel = () => {
     } catch (err) {}
   };
   return (
-    <div className="mb-4">
+    <div className="my-4">
       <form
         onSubmit={handleSubmit}
         className="mx-auto shadow rounded-xl p-4 border bg-white z-10"

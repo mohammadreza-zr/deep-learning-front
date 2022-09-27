@@ -106,7 +106,7 @@ const DatasetInfo = () => {
   };
 
   return (
-    <div>
+    <div className="py-4">
       <section className="">
         <h1 className="mb-4 font-bold">{title}</h1>
         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-10">

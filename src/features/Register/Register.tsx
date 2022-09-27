@@ -47,7 +47,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="py-4">
       <form
         onSubmit={handleSubmit}
         className="md:w-96 mx-auto shadow rounded-xl p-4 border bg-white z-10"
