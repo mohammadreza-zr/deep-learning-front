@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAppSelector } from '../../base/hooks';
 import { apiService } from '../../base/services';
@@ -10,6 +10,7 @@ const AdminPanel = () => {
   const [body, setBody] = useState<string>('');
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [hashtags, setHashtags] = useState<string>('');
+  const textarea = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -27,6 +28,13 @@ const AdminPanel = () => {
       });
       if (result.status === 201) {
         toast('dataset created!');
+        setTitle('');
+        setBody('');
+        setHashtags('');
+        selectedImage(null);
+        if (textarea.current) {
+          textarea.current.value = '';
+        }
       } else {
         toast('Some Error!');
       }
@@ -71,9 +79,9 @@ const AdminPanel = () => {
               name="body"
               cols={30}
               rows={10}
-            >
-              {body}
-            </textarea>
+              ref={textarea}
+              value={body}
+            ></textarea>
           </label>
           <label>
             Hashtags
