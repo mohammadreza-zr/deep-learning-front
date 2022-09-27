@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAppDispatch } from '../../base/hooks';
+import { useAppDispatch, useAppSelector } from '../../base/hooks';
 import { setLoading, setToken } from '../../base/redux';
 import { apiService } from '../../base/services';
 
@@ -10,6 +10,15 @@ const Login = () => {
   const [password, setPassword] = useState<string>('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isLogin = useAppSelector((state) => state.auth.isLogin);
+
+  useEffect(() => {
+    if (isLogin) {
+      toast('You are login!');
+      navigate('/',{replace: true});
+    }
+    return () => {};
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

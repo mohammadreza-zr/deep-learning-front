@@ -3,15 +3,17 @@ import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { photos } from '../assets';
+import { useAppSelector } from '../hooks';
 
 export default function Example() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
+  const userRole = useAppSelector((state) => state.auth.role);
 
   return (
     <Popover className="relative bg-white">
       <div className="flex items-center justify-between mb-4 lg:justify-start lg:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
-          <Link to="#">
+          <Link to="/">
             <span className="sr-only">Deep Learning</span>
             <img className="h-10 w-auto sm:h-12 rounded-md" src={photos.Logo} alt="" />
           </Link>
@@ -27,7 +29,7 @@ export default function Example() {
         </div>
         <Popover.Group as="nav" className="hidden space-x-10 lg:flex">
           <Link
-            to={'/'}
+            to={'/datasets'}
             className="text-base font-medium text-gray-500 hover:text-gray-900"
           >
             Datasets
@@ -50,6 +52,9 @@ export default function Example() {
           >
             Geo indeed
           </Link>
+          {userRole === 'ADMIN' || userRole === 'SUPER_ADMIN' ? (
+            <Link to="/admin">admin</Link>
+          ) : null}
         </Popover.Group>
         <div className="hidden items-center justify-end lg:flex lg:flex-1">
           <Link
@@ -144,6 +149,11 @@ export default function Example() {
                     Register
                   </Link>
                 </div>
+                {userRole === 'ADMIN' || userRole === 'SUPER_ADMIN' ? (
+                  <div>
+                    <Link to="/admin">admin</Link>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

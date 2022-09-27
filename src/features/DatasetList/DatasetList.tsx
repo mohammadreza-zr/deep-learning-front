@@ -1,12 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { DatasetCard } from '../../base/components/DatasetCard/DatasetCard';
 import { useAppDispatch } from '../../base/hooks';
 import { setLoading } from '../../base/redux';
 import { apiService } from '../../base/services';
 
 const itemsPerPage = 20;
+let searchTimeOut: string | number | NodeJS.Timeout | undefined;
 const DatasetList: FC = () => {
   const [currentItems, setCurrentItems] = useState<any>();
   const [pageCount, setPageCount] = useState(0);
@@ -28,10 +29,10 @@ const DatasetList: FC = () => {
     }
   }, [itemOffset, datasets]);
 
-  useEffect(() => {
-    fetchDatasetList();
-    return () => {};
-  }, []);
+  // useEffect(() => {
+  //   fetchDatasetList();
+  //   return () => {};
+  // }, []);
 
   const fetchDatasetList = async () => {
     try {
@@ -39,6 +40,23 @@ const DatasetList: FC = () => {
       if (search) setSearch('');
       if (filterMenuIsOpen) handleToggleFilterMenu();
       const result = await apiService.get(`datasets?${tag ? 'hashtag=' + tag : ''}`);
+      if (result.status === 200) {
+        setDatasets(result.data.data);
+        setPageCount(result.data.count);
+        if (tag) setHashtagFiltered(true);
+        else setHashtagFiltered(false);
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(setLoading(false));
+    }
+  };
+
+  const handleClearFilters = async () => {
+    try {
+      if (search) setSearch('');
+      if (filterMenuIsOpen) handleToggleFilterMenu();
+      const result = await apiService.get(`datasets`);
       if (result.status === 200) {
         setDatasets(result.data.data);
         setPageCount(result.data.count);
@@ -68,7 +86,14 @@ const DatasetList: FC = () => {
   };
 
   useEffect(() => {
-    if (search?.length > 0) handleFilter('');
+    if (search?.length > 0) {
+      clearTimeout(searchTimeOut);
+      searchTimeOut = setTimeout(() => {
+        handleFilter('');
+      }, 200);
+    } else {
+      fetchDatasetList();
+    }
     return () => {};
   }, [search]);
 
@@ -126,9 +151,13 @@ const DatasetList: FC = () => {
           </button>
         )}
         {hashtagFiltered && (
-          <p onClick={fetchDatasetList} className="tag cursor-pointer tag-red">
+          <Link
+            to={`/datasets`}
+            onClick={handleClearFilters}
+            className="tag cursor-pointer tag-red"
+          >
             Clear filter
-          </p>
+          </Link>
         )}
         <div className="mb-4">
           <div className="flex items-baseline mb-3">

@@ -38,7 +38,13 @@ const HashtagSection = ({ hashtag }: any) => {
 };
 
 const BodySection = ({ body }: any) => {
-  return <p>{body}</p>;
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: body,
+      }}
+    ></div>
+  );
 };
 
 const DatasetInfo = () => {
@@ -121,68 +127,73 @@ const DatasetInfo = () => {
           </div>
         </div>
       </section>
-      <section className="select-none">
-        <h2 className="my-4 font-bold">Additional datasets to explore:</h2>
-        <Swiper
-          modules={[A11y, Pagination]}
-          spaceBetween={50}
-          slidesPerView={1}
-          className="swiper_center"
-          navigation
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
-          breakpoints={{
-            380: {
-              slidesPerView: 2,
-              spaceBetween: 10,
-            },
-            480: {
-              slidesPerView: 2,
-              spaceBetween: 10,
-            },
-            640: {
-              slidesPerView: 3,
-              spaceBetween: 20,
-            },
-            768: {
-              slidesPerView: 4,
-              spaceBetween: 40,
-            },
-            1024: {
-              slidesPerView: 4,
-              spaceBetween: 50,
-            },
-          }}
-        >
-          {data?.similarDatasets?.map((dataset: any, index: number) => {
-            return (
-              <SwiperSlide className="p-4" key={index}>
-                <Link
-                  to={`/datasets/${dataset.title}`}
-                  onClick={() => {
-                    window.scroll({
-                      top: 0,
-                    });
-                  }}
-                  className="h-48 w-44 flex flex-col justify-between rounded-md p-2 hover:scale-110 cursor-pointer transition-transform border border-gray-300"
-                >
-                  <div className="h-28">
-                    <img
-                      src={baseUrl + dataset.imageUrl}
-                      alt=""
-                      className="rounded-md"
-                      crossOrigin="anonymous"
-                    />
-                  </div>
-                  <span className="font-size-16 h-7 min-h-fit line-clamp-1">
-                    {dataset.title}
-                  </span>
-                </Link>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      </section>
+      {data?.similarDatasets?.length !== 0 && (
+        <section className="select-none">
+          <h2 className="my-4 font-bold">Additional datasets to explore:</h2>
+          <Swiper
+            modules={[A11y, Pagination]}
+            spaceBetween={50}
+            slidesPerView={1}
+            className="swiper_center"
+            navigation
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: true }}
+            breakpoints={{
+              380: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              480: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 50,
+              },
+            }}
+          >
+            {data?.similarDatasets?.map((dataset: any, index: number) => {
+              return (
+                <SwiperSlide className="p-4" key={index}>
+                  <Link
+                    to={`/datasets/${dataset.title}`}
+                    onClick={() => {
+                      window.scroll({
+                        top: 0,
+                      });
+                    }}
+                    className="h-48 w-44 flex flex-col justify-between rounded-md p-2 hover:scale-110 cursor-pointer transition-transform border border-gray-300"
+                  >
+                    <div className="h-[8.5rem] overflow-hidden">
+                      <img
+                        src={baseUrl + dataset.imageUrl}
+                        alt=""
+                        className="rounded-md w-full h-full"
+                        crossOrigin="anonymous"
+                        style={{
+                          objectFit: 'contain',
+                        }}
+                      />
+                    </div>
+                    <span className="font-size-16 h-7 min-h-fit line-clamp-1">
+                      {dataset.title}
+                    </span>
+                  </Link>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </section>
+      )}
     </div>
   );
 };
