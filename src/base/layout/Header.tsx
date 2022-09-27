@@ -1,13 +1,26 @@
 import { Fragment, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { photos } from '../assets';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { removeToken } from '../redux';
+import { toast } from 'react-toastify';
 
 export default function Example() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const userRole = useAppSelector((state) => state.auth.role);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(removeToken());
+    setIsNavOpen((pre) => !pre);
+    toast('Logout!');
+    navigate('/', {
+      replace: true,
+    });
+  };
 
   return (
     <Popover className="relative bg-white border-b border-gray-300">
@@ -53,7 +66,12 @@ export default function Example() {
             Geo indeed
           </Link>
           {userRole === 'ADMIN' || userRole === 'SUPER_ADMIN' ? (
-            <Link to="/admin">admin</Link>
+            <Link
+              to="/admin"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              admin
+            </Link>
           ) : null}
         </Popover.Group>
         <div className="hidden items-center justify-end lg:flex lg:flex-1">
@@ -140,20 +158,42 @@ export default function Example() {
                 >
                   Geo indeed
                 </Link>
-                <div className="flex items-center justify-start">
-                  <Link to={'/login'} className="mr-2">
-                    Login
-                  </Link>{' '}
-                  /{' '}
-                  <Link to={'/register'} className="ml-2">
-                    Register
-                  </Link>
-                </div>
                 {userRole === 'ADMIN' || userRole === 'SUPER_ADMIN' ? (
-                  <div>
-                    <Link to="/admin">admin</Link>
-                  </div>
+                  <Link
+                    to="/admin"
+                    onClick={() => setIsNavOpen((pre) => !pre)}
+                    className="text-base font-medium text-gray-500 hover:text-gray-900"
+                  >
+                    admin
+                  </Link>
                 ) : null}
+                {userRole ? (
+                  <Link
+                    to="/"
+                    onClick={handleLogout}
+                    className="text-base font-medium text-gray-500 hover:text-gray-900"
+                  >
+                    Logout
+                  </Link>
+                ) : (
+                  <div className="flex items-center justify-start">
+                    <Link
+                      to={'/login'}
+                      onClick={() => setIsNavOpen((pre) => !pre)}
+                      className="mr-2"
+                    >
+                      Login
+                    </Link>{' '}
+                    /{' '}
+                    <Link
+                      to={'/register'}
+                      onClick={() => setIsNavOpen((pre) => !pre)}
+                      className="ml-2"
+                    >
+                      Register
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>

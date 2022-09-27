@@ -1,13 +1,16 @@
 import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useAppSelector } from '../../base/hooks';
+import { useAppDispatch, useAppSelector } from '../../base/hooks';
 import { apiService } from '../../base/services';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { MyEditor } from '../../base/components';
+import { useNavigate } from 'react-router-dom';
+import { removeToken } from '../../base/redux';
 
 let delayTimer: string | number | NodeJS.Timeout | undefined;
 const AdminPanel = () => {
   const fullName = useAppSelector((state) => state.auth.fullName);
+  const dispatch = useAppDispatch();
 
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<any>('');
@@ -18,6 +21,7 @@ const AdminPanel = () => {
   const [emptyContent, setEmptyContent] = useState<boolean>(false);
 
   const imageRef = useRef<any>(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -50,7 +54,7 @@ const AdminPanel = () => {
       } else {
         toast('Some Error!');
       }
-    } catch (err) {}
+    } catch (err: any) {}
   };
 
   const handleSearchTitle = async (e: any) => {
@@ -68,7 +72,14 @@ const AdminPanel = () => {
         if (Array.isArray(result.data)) setTitleList(result.data);
         else setTitleList(null);
       }
-    } catch (err) {}
+    } catch (err: any) {
+      if (+err.status === 401) {
+        dispatch(removeToken());
+        navigate('/', {
+          replace: true,
+        });
+      }
+    }
   };
   return (
     <div className="my-4">
@@ -92,7 +103,7 @@ const AdminPanel = () => {
               onBlur={() => setFocusOnTitleInput(false)}
             />
             <ul
-              className={`overflow-hidden absolute top-full -mt-2 w-full bg-white border-2 border-black border-t-0 rounded-b-md rounded-br-md p-4 transition-[visibility] ${
+              className={`overflow-hidden absolute top-full -mt-2 w-full z-[91] bg-white border-2 border-black border-t-0 rounded-b-md rounded-br-md p-4 transition-[visibility] ${
                 focusOnTitleInput ? 'visible' : 'invisible h-0'
               }`}
             >

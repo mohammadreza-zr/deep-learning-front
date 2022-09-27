@@ -43,11 +43,15 @@ export const authSlice = createSlice({
         expires: 0.041666666666666664,
       });
     },
-    removeToken: (state: any) => {
+    removeToken: (state: AuthState) => {
       state.token = null;
+      state.isLogin = false;
+      state.role = '';
+      state.fullName = '';
       Cookies.remove('token');
       Cookies.remove('last');
-      sessionStorage.removeItem('user');
+      localStorage.removeItem('role');
+      localStorage.removeItem('fullName');
     },
   },
 });
