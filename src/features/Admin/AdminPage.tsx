@@ -30,7 +30,7 @@ const AdminPanel = () => {
       bodyFormData.append('title', title);
       bodyFormData.append('body', content);
       bodyFormData.append('file', selectedImage);
-      const tags = hashtags.split('-');
+      const tags = hashtags.split(' ');
       for (let i = 0; i < tags.length; i++) {
         bodyFormData.append('hashtag', tags[i]);
         if (i < tags.length) {
@@ -52,7 +52,7 @@ const AdminPanel = () => {
           imageRef.current.title = '';
         }
       } else {
-        toast('Some Error!');
+        toast(result.message);
       }
     } catch (err: any) {}
   };
@@ -71,6 +71,8 @@ const AdminPanel = () => {
       if (result.status === 200) {
         if (Array.isArray(result.data)) setTitleList(result.data);
         else setTitleList(null);
+      } else {
+        toast(result.message);
       }
     } catch (err: any) {
       if (+err.status === 401) {
@@ -143,7 +145,7 @@ const AdminPanel = () => {
             <input
               className="form-input"
               name="title"
-              placeholder="hashtag1-hashtag2-hashtag3"
+              placeholder="hashtag1 hashtag2 hashtag3"
               required
               type="text"
               onChange={(e: any) => setHashtags(e.target.value)}

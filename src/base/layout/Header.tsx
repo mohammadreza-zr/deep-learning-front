@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 export default function Example() {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const userRole = useAppSelector((state) => state.auth.role);
+  const [dropdownIsOpen, setDropdownIsOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -22,18 +23,28 @@ export default function Example() {
     });
   };
 
+  const handleGetUp = () => {
+    setDropdownIsOpen(false);
+    window.scroll({
+      top: 0,
+    });
+  };
+
   return (
     <Popover className="relative bg-white border-b border-gray-300 z-20">
       <div className="flex items-center justify-between mb-4 lg:justify-start lg:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
-          <Link to="/">
+          <Link to="/" onClick={() => setDropdownIsOpen(false)}>
             <span className="sr-only">Deep Learning</span>
             <img className="h-10 w-auto sm:h-12 rounded-md" src={photos.Logo} alt="" />
           </Link>
         </div>
         <div className="-my-2 -mr-2 lg:hidden">
           <Popover.Button
-            onClick={() => setIsNavOpen((pre) => !pre)}
+            onClick={() => {
+              setIsNavOpen((pre) => !pre);
+              setDropdownIsOpen(false);
+            }}
             className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           >
             <span className="sr-only">Open menu</span>
@@ -43,40 +54,103 @@ export default function Example() {
         <Popover.Group as="nav" className="hidden space-x-10 lg:flex">
           <Link
             to={'/datasets'}
+            onClick={() => setDropdownIsOpen(false)}
             className="text-base font-medium text-gray-500 hover:text-gray-900"
           >
             Datasets
           </Link>
           <Link
             to="/"
+            onClick={() => setDropdownIsOpen(false)}
             className="text-base font-medium text-gray-500 hover:text-gray-900"
           >
             Models
           </Link>
           <Link
             to="/"
+            onClick={() => setDropdownIsOpen(false)}
             className="text-base font-medium text-gray-500 hover:text-gray-900"
           >
             EO Satellites
           </Link>
-          <Link
-            to="/"
-            className="text-base font-medium text-gray-500 hover:text-gray-900"
-          >
-            Geo indeed
-          </Link>
+          <div className="relative">
+            <button
+              onClick={() => setDropdownIsOpen((pre: boolean) => !pre)}
+              data-dropdown-toggle="dropdownNavbar"
+              className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
+            >
+              Geo indeed
+              <svg
+                className="w-4 h-4 ml-1"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            </button>
+            <div
+              className={`${
+                dropdownIsOpen ? '' : 'hidden'
+              } absolute left-0 top-3/4 bg-white text-base z-10 list-none divide-y divide-gray-100 rounded shadow my-4 w-44`}
+            >
+              <Link
+                onClick={handleGetUp}
+                to=""
+                className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+              >
+                Post/Find a job
+              </Link>
+              <Link
+                onClick={handleGetUp}
+                to=""
+                className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+              >
+                Training Materials
+              </Link>
+              <Link
+                onClick={handleGetUp}
+                to=""
+                className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+              >
+                Competition
+              </Link>
+              <Link
+                onClick={handleGetUp}
+                to=""
+                className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+              >
+                MSc Programs
+              </Link>
+            </div>
+          </div>
           {userRole === 'ADMIN' || userRole === 'SUPER_ADMIN' ? (
             <Link
               to="/admin"
+              onClick={() => setDropdownIsOpen(false)}
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
               admin
+            </Link>
+          ) : null}
+          {userRole === 'SUPER_ADMIN' ? (
+            <Link
+              to="/promote"
+              onClick={() => setDropdownIsOpen(false)}
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Promote
             </Link>
           ) : null}
         </Popover.Group>
         <div className="hidden items-center justify-end lg:flex lg:flex-1">
           <Link
             to="/login"
+            onClick={() => setDropdownIsOpen(false)}
             className="inline-flex items-center ml-2 justify-center whitespace-nowrap rounded-full border border-gray-700 p-1 text-base font-medium text-gray-700 shadow-sm"
           >
             <svg
@@ -119,7 +193,10 @@ export default function Example() {
                 </div>
                 <div className="-mr-2">
                   <Popover.Button
-                    onClick={() => setIsNavOpen((pre) => !pre)}
+                    onClick={() => {
+                      setIsNavOpen((pre) => !pre);
+                      setDropdownIsOpen(false);
+                    }}
                     className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                   >
                     <span className="sr-only">Close menu</span>
@@ -130,30 +207,87 @@ export default function Example() {
             </div>
             <div className="space-y-6 py-6 px-5">
               <div className="flex flex-col gap-y-4 gap-x-8">
-                <Link
-                  to={'/'}
-                  onClick={() => setIsNavOpen((pre) => !pre)}
-                  className="text-base font-medium text-gray-500 hover:text-gray-900"
-                >
-                  Datasets
-                </Link>
+                <div className="relative">
+                  <button
+                    onClick={() => setDropdownIsOpen((pre: boolean) => !pre)}
+                    data-dropdown-toggle="dropdownNavbar"
+                    className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto"
+                  >
+                    Geo indeed
+                    <svg
+                      className="w-4 h-4 ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </button>
+                  <div
+                    className={`${
+                      dropdownIsOpen ? '' : 'hidden'
+                    } w-full absolute left-0 top-3/4 bg-white text-base z-10 list-none divide-y divide-gray-100 rounded shadow my-4 md:w-44`}
+                  >
+                    <Link
+                      onClick={handleGetUp}
+                      to=""
+                      className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                    >
+                      Post/Find a job
+                    </Link>
+                    <Link
+                      onClick={handleGetUp}
+                      to=""
+                      className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                    >
+                      Training Materials
+                    </Link>
+                    <Link
+                      onClick={handleGetUp}
+                      to=""
+                      className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                    >
+                      Competition
+                    </Link>
+                    <Link
+                      onClick={handleGetUp}
+                      to=""
+                      className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2"
+                    >
+                      MSc Programs
+                    </Link>
+                  </div>
+                </div>
                 <Link
                   to="/"
-                  onClick={() => setIsNavOpen((pre) => !pre)}
+                  onClick={() => {
+                    setIsNavOpen((pre) => !pre);
+                    setDropdownIsOpen(false);
+                  }}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Models
                 </Link>
                 <Link
                   to="/"
-                  onClick={() => setIsNavOpen((pre) => !pre)}
+                  onClick={() => {
+                    setIsNavOpen((pre) => !pre);
+                    setDropdownIsOpen(false);
+                  }}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   EO Satellites
                 </Link>
                 <Link
                   to="/"
-                  onClick={() => setIsNavOpen((pre) => !pre)}
+                  onClick={() => {
+                    setIsNavOpen((pre) => !pre);
+                    setDropdownIsOpen(false);
+                  }}
                   className="text-base font-medium text-gray-500 hover:text-gray-900"
                 >
                   Geo indeed
@@ -161,10 +295,25 @@ export default function Example() {
                 {userRole === 'ADMIN' || userRole === 'SUPER_ADMIN' ? (
                   <Link
                     to="/admin"
-                    onClick={() => setIsNavOpen((pre) => !pre)}
+                    onClick={() => {
+                      setIsNavOpen((pre) => !pre);
+                      setDropdownIsOpen(false);
+                    }}
                     className="text-base font-medium text-gray-500 hover:text-gray-900"
                   >
                     admin
+                  </Link>
+                ) : null}
+                {userRole === 'SUPER_ADMIN' ? (
+                  <Link
+                    to="/promote"
+                    onClick={() => {
+                      setIsNavOpen((pre) => !pre);
+                      setDropdownIsOpen(false);
+                    }}
+                    className="text-base font-medium text-gray-500 hover:text-gray-900"
+                  >
+                    Promote
                   </Link>
                 ) : null}
                 {userRole ? (
@@ -179,7 +328,10 @@ export default function Example() {
                   <div className="flex items-center justify-start">
                     <Link
                       to={'/login'}
-                      onClick={() => setIsNavOpen((pre) => !pre)}
+                      onClick={() => {
+                        setIsNavOpen((pre) => !pre);
+                        setDropdownIsOpen(false);
+                      }}
                       className="mr-2"
                     >
                       Login
@@ -187,7 +339,10 @@ export default function Example() {
                     /{' '}
                     <Link
                       to={'/register'}
-                      onClick={() => setIsNavOpen((pre) => !pre)}
+                      onClick={() => {
+                        setIsNavOpen((pre) => !pre);
+                        setDropdownIsOpen(false);
+                      }}
                       className="ml-2"
                     >
                       Register

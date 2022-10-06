@@ -205,6 +205,9 @@ body {
   --tw-gradient-to: #fef2f2;
   --tw-text-opacity: 1;
   color: rgb(153 27 27 / var(--tw-text-opacity));
+  &:hover {
+    --tw-gradient-to: #fee2e2;
+  }
 }
 .tag-purple {
   --tw-gradient-from: #f5f3ff;
@@ -213,6 +216,9 @@ body {
   --tw-gradient-to: #f5f3ff;
   --tw-text-opacity: 1;
   color: rgb(91 33 182 / var(--tw-text-opacity));
+  &:hover {
+    --tw-gradient-to: #ede9fe;
+  }
 }
 .tag-green {
   --tw-gradient-from: #ecfdf5;
@@ -221,6 +227,9 @@ body {
   --tw-gradient-to: #ecfdf5;
   --tw-text-opacity: 1;
   color: rgb(6 95 70 / var(--tw-text-opacity));
+  &:hover {
+    --tw-gradient-to: #d1fae5;
+  }
 }
 .tag-indigo {
   --tw-gradient-from: #eef2ff;
@@ -229,6 +238,9 @@ body {
   --tw-gradient-to: #eef2ff;
   --tw-text-opacity: 1;
   color: rgb(55 48 163 / var(--tw-text-opacity));
+  &:hover {
+    --tw-gradient-to: #e0e7ff;
+  }
 }
 
 .from-gray-50-to-white,

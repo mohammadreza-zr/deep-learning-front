@@ -71,7 +71,7 @@ export const DatasetCard: FC<CardProps> = ({ title, hashtag }) => {
           {hashtag?.map((hashtag: string) => {
             return (
               <div key={hashtag} className="text-gray-400">
-                {hashtag}
+                #{hashtag}
               </div>
             );
           })}

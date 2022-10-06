@@ -7,6 +7,7 @@ import { useAppSelector } from './base/hooks';
 import Login from './features/Login/Login';
 import AdminPanel from './features/Admin/AdminPage';
 import Register from './features/Register/Register';
+import Promote from './features/Promote/Promote';
 
 function App() {
   const loadingStatus = useAppSelector((state) => state.loading.status);
@@ -23,6 +24,12 @@ function App() {
         {userRole === 'ADMIN' || userRole === 'SUPER_ADMIN' ? (
           <>
             <Route path="/admin" element={<AdminPanel />} />
+          </>
+        ) : null}
+
+        {userRole === 'SUPER_ADMIN' ? (
+          <>
+            <Route path="/promote" element={<Promote />} />
           </>
         ) : null}
 

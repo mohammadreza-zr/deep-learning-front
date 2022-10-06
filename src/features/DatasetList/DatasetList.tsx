@@ -1,9 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { Link, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { DatasetCard } from '../../base/components/DatasetCard/DatasetCard';
-import { useAppDispatch } from '../../base/hooks';
-import { setLoading } from '../../base/redux';
 import { apiService } from '../../base/services';
 
 const itemsPerPage = 20;
@@ -19,7 +18,6 @@ const DatasetList: FC = () => {
   const [lastSelectedHashtag, setLastSelectedHashtag] = useState<string>('');
   const [filterMenuIsOpen, setFilterMenuIsOpen] = useState<boolean>(false);
 
-  const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -34,39 +32,33 @@ const DatasetList: FC = () => {
       const tag = searchParams.get('hashtag');
       if (search) setSearch('');
       if (filterMenuIsOpen) handleToggleFilterMenu();
-      const result = await apiService.get(`datasets?${tag ? 'hashtag=' + tag : ''}`);
+      const result = await apiService.get(`datasets/list?${tag ? 'hashtag=' + tag : ''}`);
       if (result.status === 200) {
         setDatasets(result.data.data);
         setPageCount(result.data.count);
         if (tag) setHashtagFiltered(true);
         else setHashtagFiltered(false);
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch(setLoading(false));
-    }
+      } else toast(result.message);
+    } catch (error) {}
   };
 
   const handleClearFilters = async () => {
     try {
       if (search) setSearch('');
       if (filterMenuIsOpen) handleToggleFilterMenu();
-      const result = await apiService.get(`datasets`);
+      const result = await apiService.get(`datasets/list`);
       if (result.status === 200) {
         setDatasets(result.data.data);
         setPageCount(result.data.count);
         setHashtagFiltered(false);
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch(setLoading(false));
-    }
+      } else toast(result.message);
+    } catch (error) {}
   };
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % datasets.length;
     window.scroll({
-      top: 330,
+      top: 0,
     });
     setItemOffset(newOffset);
   };
@@ -98,16 +90,14 @@ const DatasetList: FC = () => {
 
     try {
       const result = await apiService.get(
-        `datasets/${search}?${hashtag ? 'hashtag=' + hashtag : ''}`,
+        `datasets/list/${search}${hashtag ? '?hashtag=' + hashtag : ''}`,
       );
       if (result.status === 200) {
         setDatasets(result.data.data);
         setPageCount(result.data.count);
         setHashtagFiltered(true);
-      }
-    } catch (err) {
-      dispatch(setLoading(false));
-    }
+      } else toast(result.message);
+    } catch (err) {}
   };
 
   const handleToggleFilterMenu = () => {
@@ -119,7 +109,9 @@ const DatasetList: FC = () => {
       <aside
         className={`pt-8 border-gray-100 bg-white lg:static lg:px-0 lg:col-span-4 xl:col-span-3 lg:border-r lg:bg-gradient-to-l from-gray-50-to-white
 			${
-        filterMenuIsOpen ? 'block absolute top-0 left-0 w-full h-full z-10 p-8' : 'hidden'
+        filterMenuIsOpen
+          ? 'block absolute top-0 left-0 w-full h-auto z-10 p-8 rounded-md md:rounded-none'
+          : 'hidden'
       } lg:block lg:w-1/4`}
       >
         {filterMenuIsOpen && (
@@ -155,6 +147,14 @@ const DatasetList: FC = () => {
         <div className="mb-4">
           <div className="flex items-baseline mb-3">
             <h3 className="font-medium">Tasks</h3>
+            {/* <button
+              className="hidden p-0 text-gray-400 text-sm underline ml-4"
+              type="button"
+              onClick={handleClearFilters}
+              style={hashtagFiltered ? { display: 'block' } : {}}
+            >
+              Clear All
+            </button> */}
           </div>
           <div className="flex flex-wrap">
             <button onClick={handleFilter} className="tag tag-red">
@@ -177,6 +177,14 @@ const DatasetList: FC = () => {
         <div className="mb-4">
           <div className="flex items-baseline mb-3">
             <h3 className="font-medium">Data Type</h3>
+            {/* <button
+              className="hidden p-0 text-gray-400 text-sm underline ml-4"
+              type="button"
+              onClick={handleClearFilters}
+              style={hashtagFiltered ? { display: 'block' } : {}}
+            >
+              Clear All
+            </button> */}
           </div>
           <div className="flex flex-wrap">
             <button onClick={handleFilter} className="tag tag-purple">
@@ -205,6 +213,14 @@ const DatasetList: FC = () => {
         <div className="mb-4">
           <div className="flex items-baseline mb-3">
             <h3 className="font-medium">Platforms</h3>
+            {/* <button
+              className="hidden p-0 text-gray-400 text-sm underline ml-4"
+              type="button"
+              onClick={handleClearFilters}
+              style={hashtagFiltered ? { display: 'block' } : {}}
+            >
+              Clear All
+            </button> */}
           </div>
           <div className="flex flex-wrap">
             <button onClick={handleFilter} className="tag tag-green">
@@ -224,6 +240,14 @@ const DatasetList: FC = () => {
         <div className="mb-4">
           <div className="flex items-baseline mb-3">
             <h3 className="font-medium">Satellites</h3>
+            {/* <button
+              className="hidden p-0 text-gray-400 text-sm underline ml-4"
+              type="button"
+              onClick={handleClearFilters}
+              style={hashtagFiltered ? { display: 'block' } : {}}
+            >
+              Clear All
+            </button> */}
           </div>
           <div className="flex flex-wrap">
             <button onClick={handleFilter} className="tag tag-indigo">

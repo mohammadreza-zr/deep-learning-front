@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../base/hooks';
 import { setLoading } from '../../base/redux';
 import { apiService } from '../../base/services';
 import { baseUrl } from '../../base/config';
+import { toast } from 'react-toastify';
 
 const ImageSection = ({ fullScreenImage, imageUrl }: any) => {
   return (
@@ -79,7 +80,7 @@ const DatasetInfo = () => {
       if (result.status === 200) {
         setData(result.data);
         dispatch(setLoading(false));
-      }
+      } else toast(result.message);
     } catch (error) {
       navigate(-1);
       dispatch(setLoading(false));

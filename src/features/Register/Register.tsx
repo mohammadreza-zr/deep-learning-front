@@ -100,11 +100,10 @@ const Register = () => {
           <button
             className="btn btn-lg w-full"
             data-ga-category="register"
-            data-ga-action="clicked on next"
             data-ga-label="register"
             type="submit"
           >
-            Next
+            Submit
           </button>
           <p className="block text-center mt-3 text-sm">
             Already have an account?

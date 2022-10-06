@@ -31,6 +31,8 @@ export class myAPIClass {
     withCredentials: true,
     baseURL: this.baseURL,
     headers: this.headers,
+    rejectUnauthorized: false,
+    validateStatus: null,
   };
 
   //Global Config. first one this configuration has been use.
@@ -58,9 +60,14 @@ export class myAPIClass {
 
       const data = await this.axiosInstance[requestType.type](url, body, config);
 
+      const response = Array.isArray(data?.data?.message)
+        ? data?.data?.message[0]
+        : data?.data?.message;
+      const message = response ? response : data.statusText;
+
       return {
         status: +data?.status || 400,
-        message: data?.statusText || '',
+        message: message || 'Error!',
         data: data?.data || '',
       };
     } catch (error: any) {
